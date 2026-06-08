@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+*.pyc
+hostel_app.db
+.env
+.idea/
+.vscode/

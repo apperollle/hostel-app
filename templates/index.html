@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Поиск хостелов — Hostel App{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="container">
+    <h1>Найдите хостел для путешествия</h1>
+    <p>Бронируйте койко-места в России — от Петербурга до Байкала.</p>
+    <form id="search-form" class="search-card">
+      <div>
+        <label for="city">Город</label>
+        <select id="city" name="city">
+          <option value="">Все города</option>
+        </select>
+      </div>
+      <div>
+        <label for="check_in">Заезд</label>
+        <input type="date" id="check_in" name="check_in" required />
+      </div>
+      <div>
+        <label for="check_out">Выезд</label>
+        <input type="date" id="check_out" name="check_out" required />
+      </div>
+      <div>
+        <label for="guests">Гости</label>
+        <input type="number" id="guests" name="guests" min="1" max="8" value="1" />
+      </div>
+      <div>
+        <button type="submit" class="btn btn-primary btn-block">Найти</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<div class="container">
+  <div id="search-alert"></div>
+  <div id="hostel-grid" class="hostel-grid"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

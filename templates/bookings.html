@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Личный кабинет — Hostel App{% endblock %}
+
+{% block content %}
+
+<div class="container profile-page">
+
+```
+<div class="profile-header">
+    <div class="profile-avatar">
+        {{ user.name[0].upper() }}
+    </div>
+
+    <div class="profile-info">
+        <h1>{{ user.name }}</h1>
+        <p>{{ user.email }}</p>
+
+        <div class="profile-stats">
+            <div class="stat-card">
+                <span id="booking-count">0</span>
+                <small>Бронирований</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="profile-section">
+    <h2>Мои бронирования</h2>
+
+    <div id="bookings-alert"></div>
+
+    <div id="booking-list" class="booking-list"></div>
+</div>
+```
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{{ url_for('static', filename='js/bookings.js') }}"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const observer = new MutationObserver(() => {
+        const cards = document.querySelectorAll(".booking-card");
+        const count = document.getElementById("booking-count");
+
+        if (count) {
+            count.textContent = cards.length;
+        }
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+});
+</script>
+
+{% endblock %}

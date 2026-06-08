@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Вход администратора — Hostel App{% endblock %}
+
+{% block content %}
+<div class="auth-card auth-card-admin">
+  <h1>Вход администратора</h1>
+  <p class="meta">Управление хостелами и номерами</p>
+  <div id="auth-alert"></div>
+  <form id="admin-login-form">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required autocomplete="email" />
+    </div>
+    <div class="form-group">
+      <label for="password">Пароль</label>
+      <input type="password" id="password" name="password" required />
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Войти как администратор</button>
+  </form>
+  <p class="meta" style="margin-top:1rem">
+    Демо: admin@hostel.app / admin123<br />
+    <a href="/login">Вход для пользователей</a>
+  </p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+{% endblock %}

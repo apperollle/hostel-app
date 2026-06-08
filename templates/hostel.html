@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Хостел — Hostel App{% endblock %}
+
+{% block content %}
+<div class="container" id="hostel-detail" data-hostel-id="{{ hostel_id }}">
+  <div id="detail-alert"></div>
+  <div class="detail-layout">
+    <section class="detail-hero">
+      <img id="hostel-image" src="" alt="" />
+      <h1 id="hostel-title"></h1>
+      <p class="meta" id="hostel-city"></p>
+      <p id="hostel-rating" class="rating"></p>
+      <p id="hostel-desc"></p>
+
+      <h2>Номера</h2>
+      <div id="room-list" class="room-list"></div>
+
+      <section class="reviews">
+        <h2>Отзывы</h2>
+        <div id="reviews-list"></div>
+        {% if user and user.role == 'user' %}
+        <h3>Оставить отзыв</h3>
+        <div id="review-alert"></div>
+        <form id="review-form">
+          <div class="stars-input" aria-label="Оценка">
+            {% for i in range(1, 6) %}
+            <button type="button" data-star="{{ i }}" aria-label="{{ i }} звезд">★</button>
+            {% endfor %}
+          </div>
+          <div class="form-group">
+            <label for="review-comment">Комментарий</label>
+            <textarea id="review-comment" rows="3" required minlength="10"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+        {% else %}
+        <p class="meta"><a href="/login">Войдите</a>, чтобы оставить отзыв.</p>
+        {% endif %}
+      </section>
+    </section>
+
+    <aside class="booking-panel">
+      <h2>Бронирование</h2>
+      <p id="selected-room" class="meta">Выберите номер слева</p>
+      <div class="form-group">
+        <label for="book-check-in">Заезд</label>
+        <input type="date" id="book-check-in" />
+      </div>
+      <div class="form-group">
+        <label for="book-check-out">Выезд</label>
+        <input type="date" id="book-check-out" />
+      </div>
+      <div class="form-group">
+        <label for="book-guests">Гости</label>
+        <input type="number" id="book-guests" min="1" max="8" value="1" />
+      </div>
+      {% if user and user.role == 'user' %}
+      <button type="button" class="btn btn-primary btn-block" id="book-btn">Забронировать</button>
+      {% elif user and user.role == 'admin' %}
+      <p class="meta">Бронирование доступно обычным пользователям. Выйдите и войдите через <a href="/login">вход пользователя</a>.</p>
+      {% else %}
+      <a href="/login" class="btn btn-primary btn-block">Войти для брони</a>
+      {% endif %}
+    </aside>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/hostel.js') }}"></script>
+{% endblock %}

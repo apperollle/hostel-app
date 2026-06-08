@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Админ-панель — Hostel App{% endblock %}
+
+{% block content %}
+<div class="container admin-page">
+  <div class="admin-header">
+    <h1>Управление хостелами</h1>
+    <button type="button" class="btn btn-primary" id="btn-add-hostel">+ Добавить хостел</button>
+  </div>
+  <div id="admin-alert"></div>
+  <div id="admin-hostels"></div>
+</div>
+
+<div id="modal-hostel" class="modal hidden">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-box">
+    <h2 id="modal-hostel-title">Хостел</h2>
+    <form id="hostel-form">
+      <input type="hidden" id="hostel-id" />
+      <div class="form-group">
+        <label for="hostel-name">Название</label>
+        <input type="text" id="hostel-name" required />
+      </div>
+      <div class="form-group">
+        <label for="hostel-city">Город</label>
+        <input type="text" id="hostel-city" required />
+      </div>
+      <div class="form-group">
+        <label for="hostel-address">Адрес</label>
+        <input type="text" id="hostel-address" required />
+      </div>
+      <div class="form-group">
+        <label for="hostel-desc">Описание</label>
+        <textarea id="hostel-desc" rows="3" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="hostel-image">URL изображения</label>
+        <input type="url" id="hostel-image" placeholder="https://..." />
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" data-close>Отмена</button>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="modal-room" class="modal hidden">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-box">
+    <h2 id="modal-room-title">Номер</h2>
+    <form id="room-form">
+      <input type="hidden" id="room-id" />
+      <input type="hidden" id="room-hostel-id" />
+      <div class="form-group">
+        <label for="room-name">Название</label>
+        <input type="text" id="room-name" required />
+      </div>
+      <div class="form-group">
+        <label for="room-type">Тип</label>
+        <select id="room-type" required>
+          <option value="dorm">Общий (dorm)</option>
+          <option value="private">Приватный</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="room-price">Цена за ночь (₽)</label>
+        <input type="number" id="room-price" min="1" step="1" required />
+      </div>
+      <div class="form-group">
+        <label for="room-beds">Мест в номере</label>
+        <input type="number" id="room-beds" min="1" max="20" required />
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" data-close>Отмена</button>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Hostel App{% endblock %}</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+{% block head %}{% endblock %}
+
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container inner">
+
+```
+  <a href="/" class="logo">
+    Hostel <span>App</span>
+  </a>
+
+  <nav class="nav-links">
+
+    <a href="/">Поиск</a>
+
+    {% if user %}
+
+      <a href="/bookings">Личный кабинет</a>
+
+      {% if user.role == 'admin' %}
+        <a href="/admin">Админ-панель</a>
+        <span class="badge">Админ</span>
+      {% endif %}
+
+      <span>{{ user.name }}</span>
+
+      <button type="button" class="btn btn-outline" id="logout-btn">
+        Выйти
+      </button>
+
+    {% else %}
+
+      <a href="/login">Вход</a>
+      <a href="/admin/login">Вход админа</a>
+      <a href="/register">Регистрация</a>
+
+    {% endif %}
+
+  </nav>
+</div>
+```
+
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      Hostel App — поиск и бронирование хостелов
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/api.js') }}"></script>
+
+{% block scripts %}{% endblock %}
+
+{% if user %}
+
+  <script>
+    document.getElementById("logout-btn")?.addEventListener("click", async () => {
+      await api("/api/logout", {
+        method: "POST"
+      });
+
+      const isAdmin = {{ 'true' if user.role == 'admin' else 'false' }};
+
+      window.location.href = isAdmin
+        ? "/admin/login"
+        : "/";
+    });
+  </script>
+
+{% endif %}
+
+</body>
+</html>
